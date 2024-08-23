@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface AddTaskProps {
-  addTask: (title: string, description: string) => void;
+  addTask: (date: string, title: string, description: string) => void;
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ addTask }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !description) return;
-    addTask(title, description);
-    setTitle('');
-    setDescription('');
+    addTask(date, title, description);
+    setTitle("");
+    setDescription("");
   };
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
+      <div className="mb-2">
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+        />
+      </div>
       <div className="mb-2">
         <input
           type="text"
